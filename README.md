@@ -21,3 +21,27 @@ Acceptance Criteria:
 
 Github link: https://github.com/taviral55/which-music-genre-are-you
 Deployed page:
+
+
+<!-- General Notes: 
+1. Page
+2. How 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -->
