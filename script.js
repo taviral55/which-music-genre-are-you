@@ -5,7 +5,7 @@ $(document).ready(function () {
 var spotifyApiKey = '';
 var pexelsApiKey = 'v02S0I9htMCYgc11EVr0Yf9D4VnE1EDvcONyoroDFmlLYS8kEi5IdfbT';
 
-// Genre tallies: 
+// Genre tallies: This might need to go inside of 'localStorage'.
 var rock = 0;
 var punk = 0; 
 var hipHop = 0;
@@ -94,18 +94,28 @@ function getSpitifyApi() {
 }
 
 
-
-
 function renderNextQuestion() {
-   
+/*
+      this function need to have: 
+      - An if statement at the begining that checks to see if we are done with the qestions.
+      - A loop that iterates through the questionsArray, and returns the values for each question and the responses.
+            + within the loop you also want to get the values and append them to an element questions.html
+      - lastly, use 'this' keyword if you can to save selected choice tally to their respective Genre Tallie.
+*/
 }
 function getTallies() {
-
-    
+/*
+      - This function will get the values of the Genre tallies and compare to see which is highter. 
+*/ 
 }
 function getRecomendedGenre() {
+/*
+      - this function will call getTallies() and use the responce 
+        to match it with the API calls. 
+      - fx will render to the thirdpage.html the Pexel picture, and the 
+        music recomendations based on the tallies response.
 
-
+*/ 
 }
 
 
