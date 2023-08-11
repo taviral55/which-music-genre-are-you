@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 //  MusixMatch User: salceja45 pass: Q4.@kfRqkjhx-!Y API-key: a48be86be91f015cf0ab8ad2b047c776
 var apiKey = a48be86be91f015cf0ab8ad2b047c776;
 
@@ -73,3 +75,4 @@ var questionArray = [
       
 }
 */
+>>>>>>> d5a946da1cfeedf0490278d977914daf5a06f45b
