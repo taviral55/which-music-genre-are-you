@@ -70,5 +70,6 @@ var questionArray = [
 
 4. resultFunction(){
       // compare all the variable and check which has the most.
+      
 }
 */
