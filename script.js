@@ -55,7 +55,6 @@ var questionArray = [
       },
 ];
 
-
 /* Event Handlers:
       1. on start button 'click'
             -in this handler, you have to call the 'location() function 
@@ -109,17 +108,74 @@ function getPexelsApi(id) { // done.
                   console.log('getPexelsApi: ', data);
             });
 };
-function getSpitifyApi() { // Mac
-      url = "";
+function getSpotifiyApi() {    // done
+      $(document).ready(function () {
+            getToken();
+      })
 
-      fetch(url) // might need another argument like in getPexelsApi() ex, {method: "GET", headers: ...}
-            .then(function (response) {
-                  return response.json(); // need to have the return here so we can use the next .then to get the response data.
-            })
-            .then(function (data) {
-                  console.log("getMusixMatch: ", data);
-                  // fuction that you want to run.
+      const clientId = 'aace5f500b004bd987fbd76950c65ed3';
+      const clientSecret = 'd3a4f2f98cd84191bd0dfffdf624a31e';
+      var query = 'hip hop';
+      var searchEndPoint = `https://api.spotify.com/v1/search?q=${query}&type=track&limit=5`; // need to add # of track.
+
+      // 1st we have to get the token using our client creds.
+      const getToken = async () => {
+            const result = await fetch('https://accounts.spotify.com/api/token', {
+                  method: 'POST',
+                  headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
+                  },
+                  body: 'grant_type=client_credentials'
             });
+
+            const data = await result.json();
+            var token = data.access_token;
+
+            getTracks(token, searchEndPoint);
+            return token;
+      }
+
+      // 2nd: Now we search for the song.
+      const getTracks = async (token, endPoint) => {
+            // console.log("getTracks token:" + token + " endpoint: " + endPoint)
+            const result = await fetch(endPoint, {
+                  method: 'GET',
+                  headers: { 'Authorization': 'Bearer ' + token }
+            });
+
+            const data = await result.json();
+            // need to put songPreview, artist, and album ins some kind of container.
+
+            appendToHtml(data);
+            return data.items;
+      }
+      // 3.append the tracks to the respective html doc. (thirdpage.html)
+      function appendToHtml(data) { 
+            var songContainer = $("#songContainer");
+            var queryLenth = data.tracks.items.length; // should be 5 
+
+            for (var i = 0; i < queryLenth; i++) {
+                  var shortened = data.tracks.items[i];
+
+                  var album = shortened.album.name;
+                  var artist = shortened.artists[0].name;
+                  var title = shortened.name;
+                  var songPreview = shortened.preview_url;
+
+                  var appAlbum = $('<p class="songAlbum">Song Albun: ' + album + '</p>');
+                  songContainer.append(appAlbum);
+
+                  var appArtist = $('<p class="songArtist">Artist : ' + artist + '</p>');
+                  songContainer.append(appArtist);
+
+                  var appTitle = $('<p class="songTitle">Title : ' + title + '</p>');
+                  songContainer.append(appTitle);
+
+                  var appSong = $(`<p class="songPreview">Song Preview: <a href="${songPreview}" target="_blank">Click for Song Preview</a> </p>`); 
+                  songContainer.append(appSong);
+            }
+      }
 }
 function renderNextQuestion() { // Mac and Sal
       /*
@@ -166,94 +222,6 @@ function getSoundCloudApi() { //could not figure this out. Used spotify api inst
                   console.log('getPexelsApi: ', data);
 
             });
-}
-function getSpotifiyApi() {    // Sal
-      $(document).ready(function () {
-            getToken();
-      })
-      const clientId = 'aace5f500b004bd987fbd76950c65ed3';
-      const clientSecret = 'd3a4f2f98cd84191bd0dfffdf624a31e';
-      var genreQuery = "rap"; // this value changes depening on the tally winner.
-      var searchEndPoint = `https://api.spotify.com/v1/search?q=${genreQuery}&type=track`;
-      // step 1: need to get token first.
-      const getToken = async () => {
-            const result = await fetch('https://accounts.spotify.com/api/token', {
-                  method: 'POST',
-                  headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
-                  },
-                  body: 'grant_type=client_credentials'
-            });
-            const data = await result.json();
-            var token = data.access_token;
-
-            getTracks(token, searchEndPoint);
-            return token; // might not need this return bc we are calling the getTracks function above.
-      }
-      // 2. use token to access teh endpoint.
-      const getTracks = async (token, endPoint) => {
-            // console.log("getTracks token:" + token + " endpoint: " + endPoint)
-            const result = await fetch(endPoint, {
-                  method: 'GET',
-                  headers: { 'Authorization': 'Bearer ' + token }
-            });
-            const data = await result.json();
-            // need to put songPreview, artist, and album ins some kind of container.
-            var songPreview = data.tracks.items[0].preview_url
-            var artist = data.tracks.items[0].artists[0].name
-            var album = data.tracks.items[0].album.name 
-            // var time = // song time length. 
-            console.log("song preview: ", songPreview)
-            console.log("the artist: ", artist)
-            console.log("the album is: ", album)
-            appendToHtml(data, songPreview, artist, album);
-            return data.items; // might not need this return bc we are calling the appendToHtml function above.
-      }
-      3. // append the tracks to the respective html doc. (thirdpage.html)
-      function appendToHtml(data, song, artist, album) {// mgiht need to make a media player ui if cant figure out how to use iFrame.
-            console.log('appendToHtml data: ', data)
-            var songContainer = $("#songContainer");
-            var appSong = $('<p class="songPreview">Song Preview: ' + song + '</p>');
-            songContainer.append(appSong);
-            var appArtist = $('<p class="songArtist">Artis : ' + artist + '</p>');
-            songContainer.append(appArtist);
-            var appAlbum = $('<p class="songAlbum">Song Preview: ' + album + '</p>');
-            songContainer.append(appAlbum);
-      }
-      /* // code for iframe media player in html
-      window.onSpotifyIframeApiReady = (IFrameAPI) => {
-            const element = document.getElementById('embed-iframe');
-            const options = {
-                  uri: 'spotify:episode:7makk4oTQel546B0PZlDM5'
-            };
-            const callback = (EmbedController) => {
-                  document.querySelectorAll('.episode').forEach(
-                        episode => {
-                              episode.addEventListener('click', () => {
-                                    // click event handler logic goes here
-                              });
-                        })
-            };
-            IFrameAPI.createController(element, options, callback);
-      };
-      const callback = (EmbedController) => {
-            document.querySelectorAll('.episode').forEach(
-                  episode => {
-                        episode.addEventListener('click', () => {
-                              // click event handler logic goes here
-                        });
-                  })
-      };
-      episode.addEventListener('click', () => {
-            EmbedController.loadUri(episode.dataset.spotifyId)
-      });
-      const options = { // not sure where this goes
-            width: '60%',
-            height: '200',
-            uri: 'spotify:episode:7makk4oTQel546B0PZlDM5'
-      };
-      */
 }
 
 
