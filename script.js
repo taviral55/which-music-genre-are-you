@@ -8,50 +8,52 @@ var pexelsApiKey = 'v02S0I9htMCYgc11EVr0Yf9D4VnE1EDvcONyoroDFmlLYS8kEi5IdfbT';
 // Genre tallies: This might need to go inside of 'localStorage'.
 var punkRock = 0;
 var rock = 0;
-var hipHop = 0;
+var Country = 0;
 var rap = 0
 var edm = 0;
 
 var questionArray = [
       {
             question: "Pov: You're competing in a ski race down a spooky scarry mountain and need to montage all your training, which song do you pick?",
-            a: "concert No.2 in G mi", //rock
-            b: "Vroom Vrom by Charli Xcx.", // punk
-            c: "The Motto by Drake.", // hip-hop
-            d: "Boom Boom Pow by Black-eyed Peas.", //rap
-            e: "Welcome to the Jungle by Guns n' Roses", // edm
+            a: "Welcome to  the jungle by  Guns n' Roses", //rock
+            b: "My own wosrt enemy.", // punk
+            c: "The Motto by Drake.", // Rap
+            d: "Hard Workin' Man by Brooks & Dunn", //Country
+            e: "Scary  Monsters and Nice Spirits by Skrillex", // edm
       },
       {
             question: "Which of these is most important in a concert.?",
-            a: "concert No.2 in G mi", //rock
-            b: "Vroom Vrom by Charli Xcx.", // punk
-            c: "The Motto by Drake.", // hip-hop
-            d: "Boom Boom Pow by Black-eyed Peas.", //rap
-            e: "Welcome to the Jungle by Guns n' Roses", // edm
+            a: "Dancing/Moshing", //Punk
+            b: "Concert Atmosphere", //Rap
+            c: "The Production", // rock 
+            d: "The Acoustics", // Country
+            e: "The Acoustics", //Edm
+            
       },
       {
             question: "If  you got to hang out with your favorite musician, what would you do?",
-            a: "concert No.2 in G mi", //rock
-            b: "Vroom Vrom by Charli Xcx.", // punk
-            c: "The Motto by Drake.", // hip-hop
-            d: "Boom Boom Pow by Black-eyed Peas.", //rap
-            e: "Welcome to the Jungle by Guns n' Roses", // edm
+            a: "Play Instruments Together", //punk
+            b: "Party together", // rock
+            c: "Share A J together", // rap
+            d: "Enjoy a meal and a nice conversation", //Country
+            e: "Dance-Off" // edm
       },
       {
             question: "Do you like Drake?",
-            a: "concert No.2 in G mi", //rock
-            b: "Vroom Vrom by Charli Xcx.", // punk
-            c: "The Motto by Drake.", // hip-hop
-            d: "Boom Boom Pow by Black-eyed Peas.", //rap
-            e: "Welcome to the Jungle by Guns n' Roses", // edm
+            a: "Yes", // EDM
+            b:"Yes", // Rap
+            c: "Absolutly Not", // rock 
+            d: "Absolutly Not", // punk
+            e: "Who is that????", // county
+            
       },
       {
-            question: "Do you like Drake?",
-            a: "concert No.2 in G mi", //rock
-            b: "Vroom Vrom by Charli Xcx.", // punk
-            c: "The Motto by Drake.", // hip-hop
-            d: "Boom Boom Pow by Black-eyed Peas.", //rap
-            e: "Welcome to the Jungle by Guns n' Roses", // edm
+            question: "Pick an artist",
+            a: "Ozzy Oz Borne", //rock
+            b: "Joey Ramone", // punk
+            c: "Eminem", // Rap
+            d: "Kenny Chesney", //Country
+            e: "TIESTO", // edm
       },
 ];
 
@@ -61,6 +63,7 @@ var questionArray = [
              to swith you to the questions.html
 
       2. on question choice 'click'
+      
             -this handler will 
       3. on display results 'click'.
 */
