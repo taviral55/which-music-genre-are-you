@@ -293,15 +293,14 @@ function getRecomendedGenre() {
       // getGreatestTally(punkRockCount, rockCount, rapCount, hipHopCount, edmCount);
 
 }
-function getGreatestTally(tallies) { // done.
-      var winningGenre = "";
-      var greatestTally = 0;
+function getGreatestTally(tallies) { // needs testing.
+      let winningGenre = "";
+      let greatestTally = 0;
 
       tallies.forEach(([genre, count]) => {
             if (count > greatestTally) {
                   greatestTally = count;
                   winningGenre = genre;
-                  console.log("greatestTally");
             }
       });
       getPexelsApi(winningGenre)
