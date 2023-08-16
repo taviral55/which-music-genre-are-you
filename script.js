@@ -12,6 +12,30 @@ var Country = 0;
 var rap = 0
 var edm = 0;
 
+function updateTallies(questionArr) 
+      /* pass in the button choice
+          choices: { 
+            a: "Ozzy Oz Borne", //rock
+            b: "Joey Ramone", // punk
+            c: "Eminem", // Rap
+            d: "Kenny Chesney", //Country
+            e: "TIESTO", // edm
+          }
+      */
+      // then increase that tally.
+
+      questionArr.forEach((question, index) => {
+            console.log(`Question ${index + 1} choices:`, Object.keys(question.choices));
+      });
+      return;
+var genreTallies = [
+      ["punk-rock", 6],
+      ["rock", 0],
+      ["rap", 0],
+      ["country", 0],
+      ["jazz", 0]
+]
+
 var questionArray = [
       {
             question: "Pov: You're competing in a ski race down a spooky scarry mountain and need to montage all your training, which song do you pick?",
@@ -67,6 +91,7 @@ var questionArray = [
             -this handler will 
       3. on display results 'click'.
 */
+
 
 // Functions:
 function getPexelsApi(id) { // done.
