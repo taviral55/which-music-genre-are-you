@@ -1,5 +1,5 @@
 $(document).ready(function () {
-      // getPexelsApi(159613); // for testing only. this fx need to go in getRecomendations()
+      getPexelsApi(34071); // for testing only. this fx need to go in getRecomendations()
       // getSpotifiyApi(); // for testing only. this fx need to go in getRecomendations()
 });
 
@@ -91,13 +91,15 @@ $('#startBtn').on("click", startGame); //jquery not DOM
 
 // Index Page Functions:
 function startGame() { // done
-      getPexelsApi(159613); // for testing only. this fx need to go in getRecomendations()
+      //getPexelsApi(159613); // for testing only. this fx need to go in getRecomendations()
       getSpotifiyApi();
       renderNextQuestion();
-      window.location.href = "./questions.html";
+     
 }
-function getPexelsApi(id) { // done.
-      var urlById = `https://api.pexels.com/v1/photos/${id}`; // need to find the id of the picture first.
+function getPexelsApi(id) { // done. 
+     var urlById = `https://api.pexels.com/v1/photos/${id}`; // need to find the id of the picture first.
+     // var urlById =  'https://api.pexels.com/v1/search?query=country&per_page=5'// test link
+      
       /* selected pictures info: 
             punkRock: 
                   query: 'punk'
@@ -107,14 +109,16 @@ function getPexelsApi(id) { // done.
                   query: 'rock music'
                   id:1763075 
                   url: https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&h=350
-            hip-hopp:
-                  query: boom box
-                  id: 159613
-                  url: https://images.pexels.com/photos/159613/ghettoblaster-radio-recorder-boombox-old-school-159613.jpeg
             rap: 
                   query: rap music
                   id: 2091383
                   url: https://images.pexels.com/photos/2091383/pexels-photo-2091383.jpeg
+
+             country:  
+                  query: country music
+                  id: 34071
+                  url: https://images.pexels.com/photos/34071/pexels-photo.jpg
+           
             edm: 
                   query: edm music
                   id: 11401290
@@ -133,11 +137,19 @@ function getPexelsApi(id) { // done.
                   return response.json(); // need to have the return here so we can use the next, .then to get the response data.
             })
             .then(function (data) {
-                  // var picture = data.src.medium;
+                   var picture = data.src.medium;
                   // var photographer = data.photographer;
-                  // console.log('getPexelsApi: ', data);
+                  appendPexelPicture(picture)
+                   console.log('getPexelsApi: ', data);
             });
 };
+function appendPexelPicture(img) {
+      console.log(img)
+      var imageEl = $('#pexelsContainer');
+      // when this function gets callled, we want it to append the image that matches the winner of the tallies.
+     var result = getGreatestTally() 
+
+}
 function getSpotifiyApi() {    // done
       $(document).ready(function () {
             getToken();
@@ -265,8 +277,8 @@ function getRecomendedGenre() {
 
 }
 function getGreatestTally(tallies) { // done.
-      let winningGenre = "";
-      let greatestTally = 0;
+      var winningGenre = "";
+      var greatestTally = 0;
 
       tallies.forEach(([genre, count]) => {
             if (count > greatestTally) {
@@ -274,7 +286,8 @@ function getGreatestTally(tallies) { // done.
                   winningGenre = genre;
             }
       });
-      return winningGenre;
+      getPexelsApi(winningGenre)
+      //return winningGenre;
 }
 function updateTallies(questionArr) {
       /* pass in the button choice
