@@ -4,22 +4,34 @@
 }
 
 .header {
-    background-color: black;
+    background-color: bl;
+    font-size: x-large;
 }
 
-.h1 {
+.h2 {
     background-color: black;
-    color: antiquewhite;
+    color: white;
     margin: 200px;
+    border: 5px solid;
+    border-color: white;
+    border-radius: 5px;
+    border-width: 10px;
+    font-size: xx-large;
+    
 }
 
 .button {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: larger;
-    background-color: antiquewhite;
-    color: black;
+    background-color: white;
+    color: white;
     margin: 100px;
+    text-align: center;
 
+}
+
+.display {
+    
 }
 
 
