@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
       getPexelsApi(34071); // for testing only. this fx need to go in getRecomendations()
       // getSpotifiyApi(); // for testing only. this fx need to go in getRecomendations()
@@ -87,6 +88,8 @@ var questionArray = [
 */
 $('#startBtn').on("click", startGame); //jquery not DOM
 $("#questionsPage").on("click", multipleChoiceBtn); //
+
+
 
 
 // Index Page Functions:
@@ -254,13 +257,16 @@ function renderNextQuestion() {    // Mac and Sal
 }
 function multipleChoiceBtn(event) {
       var userChoice = event.target.innerText; // grabs the innertext from button
-      console.log(userChoice);
+
+      //console.log(userChoice);
+      console.log(event)
     
       if (event.target.nodeName === "BUTTON") {
-      
+      //catpture the key of choices object  
+      //Object.keys(questionArray.);
         questionIndex++;
     
-        if (questionIndex >= questions.length) { // when this is true, no more question and renders last page.
+        if (questionIndex >= questionArray.length) { // when this is true, no more question and renders last page.
           // ex, when 4 >= 4
           $("#startPage").hide(); // start page is already hidden.
           $("#questionsPage").hide();  // diplays second page.
