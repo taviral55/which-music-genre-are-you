@@ -17,6 +17,10 @@
 }
 #startPage {
       display: block;
+      background-color: beige;
+}
+#startContainer {
+      background-color: black;
 }
 #questionsPage {
       display: block;

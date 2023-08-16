@@ -1,6 +1,6 @@
 
 $(document).ready(function () {
-      getPexelsApi(34071); // for testing only. this fx need to go in getRecomendations()
+      // getPexelsApi(34071); // for testing only. this fx need to go in getRecomendations()
       // getSpotifiyApi(); // for testing only. this fx need to go in getRecomendations()
 });
 
@@ -8,7 +8,7 @@ var pexelsApiKey = 'v02S0I9htMCYgc11EVr0Yf9D4VnE1EDvcONyoroDFmlLYS8kEi5IdfbT';
 
 // Genre tallies: This might need to go inside of 'localStorage'.
 var genreTallies = [
-      ["punk-rock", ],
+      ["punk-rock",],
       ["rock", 0],
       ["rap", 0],
       ["country", 0],
@@ -57,7 +57,7 @@ var questionArray = [
             question: "Do you like Drake?",
             choices: {
                   a: "Yes", // EDM
-                  b: "Yes", // Rap
+                  b: "No", // Rap
                   c: "Absolutly Not", // rock 
                   d: "Absolutly Not", // punk
                   e: "Who is that????", // county
@@ -87,7 +87,7 @@ var questionArray = [
       3. on display results 'click'.
 */
 $('#startBtn').on("click", startGame); //jquery not DOM
-$("#questionsPage").on("click", multipleChoiceBtn); //
+$("#questionsPage").on("click", renderNextQuestion); //
 
 
 
@@ -102,9 +102,9 @@ function startGame() { // done
       // hide the 3st page $('#resultsPage').style.display = "none"
 }
 function getPexelsApi(id) { // done. 
-     var urlById = `https://api.pexels.com/v1/photos/${id}`; // need to find the id of the picture first.
-     // var urlById =  'https://api.pexels.com/v1/search?query=country&per_page=5'// test link
-      
+      var urlById = `https://api.pexels.com/v1/photos/${id}`; // need to find the id of the picture first.
+      // var urlById =  'https://api.pexels.com/v1/search?query=country&per_page=5'// test link
+
       /* selected pictures info: 
             punkRock: 
                   query: 'punk'
@@ -233,81 +233,91 @@ function getSpotifiyApi() {    // done
 // use display of none property for sections instead of different pages.
 function renderNextQuestion() {    // Mac and Sal
       $("#question2").html("");    // clears the html at the id.
+      $("#btn1").html("");    // clears the html at the id.
+      $("#btn2").html("");    // clears the html at the id.
+      $("#btn3").html("");    // clears the html at the id.
+      $("#btn4").html("");    // clears the html at the id.
+      $("#btn5").html("");    // clears the html at the id.
+
       $("#startPage").hide();      // hides first page.
       $("#resultsPage").hide();      // hides third page.
       $("#questionsPage").show();  // diplays second page.
 
-      if (questionIndex < 0 || questionIndex >= questionArray.length) {// checks that there are no negatives.
-            return;
+      if (questionArray.length === questionIndex + 1) {
+            $("#startPage").hide();
+            $("#questionsPage").hide();
+            $("#resultsPage").show();
+            getRecomendedGenre();
       }
 
-      var currentQuestion = questionArray[questionIndex]
+      var currentQuestion = questionArray[questionIndex] // returns the cuestion text inside the questions array.
 
-      // sets the new question in the html
       $("#question2").append(currentQuestion.question);// appends question to question container.
 
       for (var i = 1; i <= 5; i++) { // renders all the choices to the html.
             var choiceBtnEl = $("#btn" + i);     // bc btns start at 1.
-            var btnInnerText = currentQuestion.choices[Object.keys(currentQuestion.choices)[i-1]];  // gets values of choices.
+            var btnInnerText = currentQuestion.choices[Object.keys(currentQuestion.choices)[i - 1]];  // gets values of choices.
             choiceBtnEl.append(btnInnerText);
-            // append to html.
       };
 
-      // questionIndex++;
+      questionIndex++;
 }
 function multipleChoiceBtn(event) {
       var userChoice = event.target.innerText; // grabs the innertext from button
 
       //console.log(userChoice);
       console.log(event)
-    
+
       if (event.target.nodeName === "BUTTON") {
-      //catpture the key of choices object  
-      //Object.keys(questionArray.);
-        questionIndex++;
-    
-        if (questionIndex >= questionArray.length) { // when this is true, no more question and renders last page.
-          // ex, when 4 >= 4
-          $("#startPage").hide(); // start page is already hidden.
-          $("#questionsPage").hide();  // diplays second page.
-          $("#resultsPage").show();      // hides third page.     
-        }
+            //catpture the key of choices object  
+            //Object.keys(questionArray.);
+            //   questionIndex++;
+
+            if (questionIndex >= questionArray.length) { // when this is true, no more question and renders last page.
+                  // ex, when 4 >= 4
+                  $("#startPage").hide(); // start page is already hidden.
+                  $("#questionsPage").hide();  // diplays second page.
+                  $("#resultsPage").show();      // hides third page.     
+            }
       }
-    }
+}
 
 // Third Page Functions: 
 function getRecomendedGenre() {
+      console.log("getRecomendedGenre is WORKING!")
+      var tallyWinner = getGreatestTally(punkRockCount, rockCount, rapCount, hipHopCount, edmCount); // returns genre string.
+      // maybe and nested if to find the id
+      var pexelsImage = getPexelsApi(tallyWinner)
+
       /*
-            - this function will call getTallies() and use the response string
-              to match to make a call to the getPexelsApi(). 
             - use the 'select pictures info:' in the getPexelsApi() function to find 
               the picture we are using. Pass in the id to getPexelsApi()
             - fx will use Location() function to render the thirdpage.html. 
             - in this page, we will have the Pexel picture on the left, and the 
               music recomendations based on the tallies responses to the right.
       */
-      var exampleTally = 'hip-hop';
-
-      var responseArray = [
-            { genre: "punk-rock", description: "Your are Punk-Rock!" },
-            { genre: "rock", description: "Your are a Rocker!" },
-            { genre: "rap", description: "Your are a Rapper!" },
-            { genre: "country", description: "Your are Country!" },
-            { genre: "edm", description: "Your are a Edmer!" },
-      ]
-
-      // getGreatestTally(punkRockCount, rockCount, rapCount, hipHopCount, edmCount);
+      /*
+            var exampleTally = 'hip-hop';
+      
+            var responseArray = [
+                  { genre: "punk-rock", description: "Your are Punk-Rock!" },
+                  { genre: "rock", description: "Your are a Rocker!" },
+                  { genre: "rap", description: "Your are a Rapper!" },
+                  { genre: "country", description: "Your are Country!" },
+                  { genre: "edm", description: "Your are a Edmer!" },
+            ]
+      */
+      
 
 }
-function getGreatestTally(tallies) { // done.
-      var winningGenre = "";
-      var greatestTally = 0;
+function getGreatestTally(tallies) { // needs testing.
+      let winningGenre = "";
+      let greatestTally = 0;
 
       tallies.forEach(([genre, count]) => {
             if (count > greatestTally) {
                   greatestTally = count;
                   winningGenre = genre;
-                  console.log("greatestTally");
             }
       });
       getPexelsApi(winningGenre)
@@ -339,13 +349,12 @@ function updateTallies(questionArr) {
 
 
 TODO: 
-- need to change appendToHtml() to match the id's from the html page.
-- we might neet to make a script file for each html page.
+- need to get the choice values from the button click and save them to the tallies.
 
 
 BUGS: list any bug here so that we are all aware of the issues.
 
-- renderNextQuestion- not appending to html.
+- 
 
 -
 
