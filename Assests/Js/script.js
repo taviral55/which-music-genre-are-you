@@ -1,59 +1,77 @@
 $(document).ready(function () {
-      getPexelsApi(159613); // for testing only. this fx need to go in getRecomendations()
-      getSpotifiyApi(); // for testing only. this fx need to go in getRecomendations()
+      // getPexelsApi(159613); // for testing only. this fx need to go in getRecomendations()
+      // getSpotifiyApi(); // for testing only. this fx need to go in getRecomendations()
 });
-var spotifyApiKey = '';
+
 var pexelsApiKey = 'v02S0I9htMCYgc11EVr0Yf9D4VnE1EDvcONyoroDFmlLYS8kEi5IdfbT';
 
 // Genre tallies: This might need to go inside of 'localStorage'.
-var punkRock = 0;
-var rock = 0;
-var Country = 0;
-var rap = 0
-var edm = 0;
+var genreTallies = [
+      ["punk-rock", 6],
+      ["rock", 0],
+      ["rap", 0],
+      ["country", 0],
+      ["jazz", 0]
+]
+/* var punkRockCount = 0;
+var rockCount = 0;
+var hipHopCount = 0;
+var rapCount = 0
+var edmCount = 0;*/
+
+var questionIndex = 0; // the initial indes of the questions array.
 
 var questionArray = [
       {
             question: "Pov: You're competing in a ski race down a spooky scarry mountain and need to montage all your training, which song do you pick?",
-            a: "Welcome to  the jungle by  Guns n' Roses", //rock
-            b: "My own wosrt enemy.", // punk
-            c: "The Motto by Drake.", // Rap
-            d: "Hard Workin' Man by Brooks & Dunn", //Country
-            e: "Scary  Monsters and Nice Spirits by Skrillex", // edm
+            choices: {
+                  a: "Welcome to  the jungle by  Guns n' Roses", //rock
+                  b: "My own worst enemy.", // punk
+                  c: "The Motto by Drake.", // Rap
+                  d: "Hard Workin' Man by Brooks & Dunn", //Country
+                  e: "Scary  Monsters and Nice Spirits by Skrillex", // edm
+            }
       },
       {
             question: "Which of these is most important in a concert.?",
-            a: "Dancing/Moshing", //Punk
-            b: "Concert Atmosphere", //Rap
-            c: "The Production", // rock 
-            d: "The Acoustics", // Country
-            e: "The Acoustics", //Edm
-            
+            choices: {
+                  a: "Dancing/Moshing", //Punk
+                  b: "Concert Atmosphere", //Rap
+                  c: "The Production", // rock 
+                  d: "The Acoustics", // Country
+                  e: "The Acoustics", //Edm
+            }
       },
       {
             question: "If  you got to hang out with your favorite musician, what would you do?",
-            a: "Play Instruments Together", //punk
-            b: "Party together", // rock
-            c: "Share A J together", // rap
-            d: "Enjoy a meal and a nice conversation", //Country
-            e: "Dance-Off" // edm
+            choices: {
+                  a: "Play Instruments Together", //punk
+                  b: "Party together", // rock
+                  c: "Share A J together", // rap
+                  d: "Enjoy a meal and a nice conversation", //Country
+                  e: "Dance-Off" // edm
+            }
       },
       {
             question: "Do you like Drake?",
-            a: "Yes", // EDM
-            b:"Yes", // Rap
-            c: "Absolutly Not", // rock 
-            d: "Absolutly Not", // punk
-            e: "Who is that????", // county
-            
+            choices: {
+                  a: "Yes", // EDM
+                  b: "Yes", // Rap
+                  c: "Absolutly Not", // rock 
+                  d: "Absolutly Not", // punk
+                  e: "Who is that????", // county
+            }
+
       },
       {
             question: "Pick an artist",
-            a: "Ozzy Oz Borne", //rock
-            b: "Joey Ramone", // punk
-            c: "Eminem", // Rap
-            d: "Kenny Chesney", //Country
-            e: "TIESTO", // edm
+            choices: {
+                  a: "Ozzy Oz Borne", //rock
+                  b: "Joey Ramone", // punk
+                  c: "Eminem", // Rap
+                  d: "Kenny Chesney", //Country
+                  e: "TIESTO", // edm
+            }
       },
 ];
 
@@ -67,8 +85,17 @@ var questionArray = [
             -this handler will 
       3. on display results 'click'.
 */
+$('#startBtn').on("click", startGame); //jquery not DOM
 
-// Functions:
+
+
+// Index Page Functions:
+function startGame() { // done
+      getPexelsApi(159613); // for testing only. this fx need to go in getRecomendations()
+      getSpotifiyApi();
+      renderNextQuestion();
+      window.location.href = "./questions.html";
+}
 function getPexelsApi(id) { // done.
       var urlById = `https://api.pexels.com/v1/photos/${id}`; // need to find the id of the picture first.
       /* selected pictures info: 
@@ -108,7 +135,7 @@ function getPexelsApi(id) { // done.
             .then(function (data) {
                   // var picture = data.src.medium;
                   // var photographer = data.photographer;
-                  console.log('getPexelsApi: ', data);
+                  // console.log('getPexelsApi: ', data);
             });
 };
 function getSpotifiyApi() {    // done
@@ -154,48 +181,66 @@ function getSpotifiyApi() {    // done
             return data.items;
       }
       // 3.append the tracks to the respective html doc. (thirdpage.html)
-      function appendToHtml(data) { 
-            var songContainer = $("#songContainer");
+      function appendToHtml(data) {
+            var songContainer = $("#cardContainer");
             var queryLenth = data.tracks.items.length; // should be 5 
 
             for (var i = 0; i < queryLenth; i++) {
                   var shortened = data.tracks.items[i];
+                  var card = $('<div class="card3"> </div>');
+                  var descContainer = $('<div class="desc3"></div>');
 
-                  var album = shortened.album.name;
+                  songContainer.append(card);
+
+                  var imageIcon = shortened.album.images[2].url;
                   var artist = shortened.artists[0].name;
                   var title = shortened.name;
                   var songPreview = shortened.preview_url;
 
-                  var appAlbum = $('<p class="songAlbum">Song Albun: ' + album + '</p>');
-                  songContainer.append(appAlbum);
+                  var appIconImg = $(`<img src=${imageIcon} alt="Album cover image" width="75" height="75" />`);
+                  card.append(appIconImg);
 
-                  var appArtist = $('<p class="songArtist">Artist : ' + artist + '</p>');
-                  songContainer.append(appArtist);
+                  var appArtist = $('<p class="songArtist3">Artist : ' + artist + '</p>');
+                  descContainer.append(appArtist);
+                  var appTitle = $('<p class="songTitle3">Title : ' + title + '</p>');
+                  descContainer.append(appTitle);
+                  var appSong = $(`<p class="songPreview3">Song Preview: <a href="${songPreview}" target="_blank">Click for Song Preview</a> </p>`);
+                  descContainer.append(appSong);
 
-                  var appTitle = $('<p class="songTitle">Title : ' + title + '</p>');
-                  songContainer.append(appTitle);
-
-                  var appSong = $(`<p class="songPreview">Song Preview: <a href="${songPreview}" target="_blank">Click for Song Preview</a> </p>`); 
-                  songContainer.append(appSong);
+                  card.append(descContainer);
             }
       }
 }
+
+// Questions Page Functions:
+// use display of none property for sections instead of different pages.
 function renderNextQuestion() { // Mac and Sal
-      /*
-            this function need to have: 
+      /* this function need to have: 
             - An if statement at the begining that checks to see if we are done with the qestions.
             - A loop that iterates through the questionsArray, and returns the values for each question and the responses.
                   + within the loop you also want to get the values and append them to an element questions.html
             - lastly, use 'this' keyword if you can to save selected choice tally to their respective Genre Tallie.
       */
+
+      // if (questionIndex < 0 || questionIndex >= questionArray.length) {// checks that there are no negatives.
+      //       return;
+      // }
+
+      var currentQuestion = questionArray[questionIndex]
+
+      // sets the new question in the html
+      $("#question2").text(currentQuestion.question);
+
+      for (var i = 0; i < 5; i++) { // renders all the choices to the html.
+            // console.log(Object.keys(currentQuestion.choices)[i])
+            $("#btn" + i).text(currentQuestion.choices[Object.keys(currentQuestion.choices)[i]]); // = ex, ['a']
+            console.log('currentQuestion.choices[i]: ', currentQuestion.choices[Object.keys(currentQuestion.choices)[i]])
+      };
+
+      questionIndex++;
 }
-function getTallies() {
-      /*
-            - This function will get the values of the Genre tallies
-              and compare to see which is highter. 
-            - it will return a string with the genre that won. for example, 'rock'
-      */
-}
+
+// Third Page Functions: 
 function getRecomendedGenre() {
       /*
             - this function will call getTallies() and use the response string
@@ -206,31 +251,54 @@ function getRecomendedGenre() {
             - in this page, we will have the Pexel picture on the left, and the 
               music recomendations based on the tallies responses to the right.
       */
-}
-function getSoundCloudApi() { //could not figure this out. Used spotify api instead.
-      var url = '';
-      var apiKey = '';
-      fetch(urlById, {
-            method: 'GET',
-            headers: {
-                  Authorization: 'v02S0I9htMCYgc11EVr0Yf9D4VnE1EDvcONyoroDFmlLYS8kEi5IdfbT'
-            }
-      })
-            .then(function (response) {
-                  return response.json(); // need to have the return here so we can use the next, .then to get the response data.
-            })
-            .then(function (data) {
-                  // var picture = data.src.medium;
-                  // var photographer = data.photographer;
-                  console.log('getPexelsApi: ', data);
+      var exampleTally = 'hip-hop';
 
-            });
+      var responseArray = [
+            { genre: "punk-rock", description: "Your are Punk-Rock!" },
+            { genre: "rock", description: "Your are a Rocker!" },
+            { genre: "rap", description: "Your are a Rapper!" },
+            { genre: "country", description: "Your are Country!" },
+            { genre: "edm", description: "Your are a Edmer!" },
+      ]
+
+      // getGreatestTally(punkRockCount, rockCount, rapCount, hipHopCount, edmCount);
+
 }
+function getGreatestTally(tallies) { // done.
+      let winningGenre = "";
+      let greatestTally = 0;
+
+      tallies.forEach(([genre, count]) => {
+            if (count > greatestTally) {
+                  greatestTally = count;
+                  winningGenre = genre;
+            }
+      });
+      return winningGenre;
+}
+function updateTallies(questionArr) {
+      /* pass in the button choice
+          choices: { 
+            a: "Ozzy Oz Borne", //rock
+            b: "Joey Ramone", // punk
+            c: "Eminem", // Rap
+            d: "Kenny Chesney", //Country
+            e: "TIESTO", // edm
+          }
+      */
+      // then increase that tally.
+
+      questionArr.forEach((question, index) => {
+            console.log(`Question ${index + 1} choices:`, Object.keys(question.choices));
+      });
+      return;
+}
+
+// console.log("updateTallies: ", updateTallies(questionArray));
 
 
 
 /* 
-
 
 
 TODO: 
@@ -240,7 +308,7 @@ TODO:
 
 BUGS: list any bug here so that we are all aware of the issues.
 
--
+- renderNextQuestion- not appending to html.
 
 -
 

@@ -1,23 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-
-</main>
-<div>
-  <h1>Hello
-    Input your name:</h1>
-  <input />
-</div>
-<div>
-  <a href=questions.html> <button>Start</button> </a>
-</div>
-<div id=" songContainer">
-</div>
-<!-- spotify iframe
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document Location</title>
+    <!-- fontawesome -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+      crossorigin="anonymous"
+    />
+    <!-- google fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <!-- jQeury -->
     <script
-       src="https://open.spotify.com/embed-podcast/iframe-api/v1"
-       async
-     ></script> -->
-<script src="./script.js"></script>
-</body>
+      src="https://code.jquery.com/jquery-3.7.0.min.js"
+      integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+      crossorigin="anonymous"
+    ></script>
+    <!-- dayjs() -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
+      integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" type="text/css" href="./Assests/Css/style.css" />
+  </head>
+  <body>
+    <section id="startPage">
+      <div>
+        <h1>Get a music genre recomendatin by answering some questions</h1>
+      </div>
+      <div>
+        <button id="startBtn">Start</button>
+      </div>
+      <div id="songContainer"></div>
+    </section>
+    <section id="questionsPage">
+      <div class="container">
+        <div id="game" class="justify-center flex-column">
+          <div id="hud">
+            <h2 id="question2">
+              <!-- will get filled with from a fucntion -->
+            </h2>
+            <div id="btnContainer">
+              <button id="btn1" type="button">test</button
+              ><!-- buttons will get filled with a function -->
+              <button id="btn2" type="button">test</button>
+              <button id="btn3" type="button">test</button>
+              <button id="btn4" type="button">test</button>
+              <button id="btn5" type="button">test</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="resultsPage">
+      <div id="container3">
+        <aside>
+          <!-- Pexels api call goes here. -->
+        </aside>
+        <main>
+          <div>
+            <h2>Recomendations</h2>
+            <h3>You area Punk-rock listener, your adventurous...</h3>
+          </div>
+          <div id="cardContainer"></div>
+        </main>
+      </div>
+    </section>
 
+    <script src="./Assests/Js/script.js"></script>
+  </body>
 </html>
