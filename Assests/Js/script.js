@@ -7,7 +7,7 @@ var pexelsApiKey = 'v02S0I9htMCYgc11EVr0Yf9D4VnE1EDvcONyoroDFmlLYS8kEi5IdfbT';
 
 // Genre tallies: This might need to go inside of 'localStorage'.
 var genreTallies = [
-      ["punk-rock", 6],
+      ["punk-rock", ],
       ["rock", 0],
       ["rap", 0],
       ["country", 0],
@@ -26,7 +26,7 @@ var questionArray = [
             question: "Pov: You're competing in a ski race down a spooky scarry mountain and need to montage all your training, which song do you pick?",
             choices: {
                   a: "Welcome to  the jungle by  Guns n' Roses", //rock
-                  b: "My own worst enemy.", // punk
+                  b: "My own worst enemy by LIT", // punk
                   c: "The Motto by Drake.", // Rap
                   d: "Hard Workin' Man by Brooks & Dunn", //Country
                   e: "Scary  Monsters and Nice Spirits by Skrillex", // edm
