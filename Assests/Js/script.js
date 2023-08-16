@@ -86,7 +86,7 @@ var questionArray = [
       3. on display results 'click'.
 */
 $('#startBtn').on("click", startGame); //jquery not DOM
-
+$("#questionsPage").on("click", multipleChoiceBtn); //
 
 
 // Index Page Functions:
@@ -94,7 +94,9 @@ function startGame() { // done
       //getPexelsApi(159613); // for testing only. this fx need to go in getRecomendations()
       getSpotifiyApi();
       renderNextQuestion();
-     
+      // hide the 1st page $('#startPage').style.display = "none"
+      // hide the 2st page $('#secondPage').style.display = "none"
+      // hide the 3st page $('#resultsPage').style.display = "none"
 }
 function getPexelsApi(id) { // done. 
      var urlById = `https://api.pexels.com/v1/photos/${id}`; // need to find the id of the picture first.
@@ -137,18 +139,18 @@ function getPexelsApi(id) { // done.
                   return response.json(); // need to have the return here so we can use the next, .then to get the response data.
             })
             .then(function (data) {
-                   var picture = data.src.medium;
+                  var picture = data.src.medium;
                   // var photographer = data.photographer;
-                  appendPexelPicture(picture)
-                   console.log('getPexelsApi: ', data);
+                  // console.log('getPexelsApi: ', data);
+                  // console.log('getPexelsApi picture: ', picture);
+                  // appendPexelPicture(picture);
             });
 };
 function appendPexelPicture(img) {
-      console.log(img)
+      // console.log(img)
       var imageEl = $('#pexelsContainer');
       // when this function gets callled, we want it to append the image that matches the winner of the tallies.
-     var result = getGreatestTally() 
-
+      getGreatestTally()
 }
 function getSpotifiyApi() {    // done
       $(document).ready(function () {
@@ -226,31 +228,46 @@ function getSpotifiyApi() {    // done
 
 // Questions Page Functions:
 // use display of none property for sections instead of different pages.
-function renderNextQuestion() { // Mac and Sal
-      /* this function need to have: 
-            - An if statement at the begining that checks to see if we are done with the qestions.
-            - A loop that iterates through the questionsArray, and returns the values for each question and the responses.
-                  + within the loop you also want to get the values and append them to an element questions.html
-            - lastly, use 'this' keyword if you can to save selected choice tally to their respective Genre Tallie.
-      */
+function renderNextQuestion() {    // Mac and Sal
+      $("#question2").html("");    // clears the html at the id.
+      $("#startPage").hide();      // hides first page.
+      $("#resultsPage").hide();      // hides third page.
+      $("#questionsPage").show();  // diplays second page.
 
-      // if (questionIndex < 0 || questionIndex >= questionArray.length) {// checks that there are no negatives.
-      //       return;
-      // }
+      if (questionIndex < 0 || questionIndex >= questionArray.length) {// checks that there are no negatives.
+            return;
+      }
 
       var currentQuestion = questionArray[questionIndex]
 
       // sets the new question in the html
-      $("#question2").text(currentQuestion.question);
+      $("#question2").append(currentQuestion.question);// appends question to question container.
 
-      for (var i = 0; i < 5; i++) { // renders all the choices to the html.
-            // console.log(Object.keys(currentQuestion.choices)[i])
-            $("#btn" + i).text(currentQuestion.choices[Object.keys(currentQuestion.choices)[i]]); // = ex, ['a']
-            console.log('currentQuestion.choices[i]: ', currentQuestion.choices[Object.keys(currentQuestion.choices)[i]])
+      for (var i = 1; i <= 5; i++) { // renders all the choices to the html.
+            var choiceBtnEl = $("#btn" + i);     // bc btns start at 1.
+            var btnInnerText = currentQuestion.choices[Object.keys(currentQuestion.choices)[i-1]];  // gets values of choices.
+            choiceBtnEl.append(btnInnerText);
+            // append to html.
       };
 
-      questionIndex++;
+      // questionIndex++;
 }
+function multipleChoiceBtn(event) {
+      var userChoice = event.target.innerText; // grabs the innertext from button
+      console.log(userChoice);
+    
+      if (event.target.nodeName === "BUTTON") {
+      
+        questionIndex++;
+    
+        if (questionIndex >= questions.length) { // when this is true, no more question and renders last page.
+          // ex, when 4 >= 4
+          $("#startPage").hide(); // start page is already hidden.
+          $("#questionsPage").hide();  // diplays second page.
+          $("#resultsPage").show();      // hides third page.     
+        }
+      }
+    }
 
 // Third Page Functions: 
 function getRecomendedGenre() {
@@ -276,9 +293,9 @@ function getRecomendedGenre() {
       // getGreatestTally(punkRockCount, rockCount, rapCount, hipHopCount, edmCount);
 
 }
-function getGreatestTally(tallies) { // done.
-      var winningGenre = "";
-      var greatestTally = 0;
+function getGreatestTally(tallies) { // needs testing.
+      let winningGenre = "";
+      let greatestTally = 0;
 
       tallies.forEach(([genre, count]) => {
             if (count > greatestTally) {

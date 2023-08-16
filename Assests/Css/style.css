@@ -3,7 +3,7 @@
       display: flex;
 }
 #cardContainer{
-  
+  padding: 1px;
 }
 .card3 {
       display: flex;
@@ -19,8 +19,8 @@
       display: block;
 }
 #questionsPage {
-      display: none;
+      display: block;
 }
 #resultsPage {
-      display: none;
+      display: block;
 }
