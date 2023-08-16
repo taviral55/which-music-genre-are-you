@@ -276,7 +276,7 @@ function getRecomendedGenre() {
       // getGreatestTally(punkRockCount, rockCount, rapCount, hipHopCount, edmCount);
 
 }
-function getGreatestTally(tallies) { // done.
+function getGreatestTally(tallies) { // needs testing
       var winningGenre = "";
       var greatestTally = 0;
 
@@ -284,6 +284,7 @@ function getGreatestTally(tallies) { // done.
             if (count > greatestTally) {
                   greatestTally = count;
                   winningGenre = genre;
+                  console.log("greatestTally");
             }
       });
       getPexelsApi(winningGenre)
