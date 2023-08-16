@@ -1,5 +1,5 @@
 $(document).ready(function () {
-      // getPexelsApi(159613); // for testing only. this fx need to go in getRecomendations()
+      getPexelsApi(34071); // for testing only. this fx need to go in getRecomendations()
       // getSpotifiyApi(); // for testing only. this fx need to go in getRecomendations()
 });
 
@@ -7,7 +7,7 @@ var pexelsApiKey = 'v02S0I9htMCYgc11EVr0Yf9D4VnE1EDvcONyoroDFmlLYS8kEi5IdfbT';
 
 // Genre tallies: This might need to go inside of 'localStorage'.
 var genreTallies = [
-      ["punk-rock", 6],
+      ["punk-rock", ],
       ["rock", 0],
       ["rap", 0],
       ["country", 0],
@@ -26,7 +26,7 @@ var questionArray = [
             question: "Pov: You're competing in a ski race down a spooky scarry mountain and need to montage all your training, which song do you pick?",
             choices: {
                   a: "Welcome to  the jungle by  Guns n' Roses", //rock
-                  b: "My own worst enemy.", // punk
+                  b: "My own worst enemy by LIT", // punk
                   c: "The Motto by Drake.", // Rap
                   d: "Hard Workin' Man by Brooks & Dunn", //Country
                   e: "Scary  Monsters and Nice Spirits by Skrillex", // edm
@@ -91,15 +91,17 @@ $("#questionsPage").on("click", multipleChoiceBtn); //
 
 // Index Page Functions:
 function startGame() { // done
-      getPexelsApi(159613); // for testing only. this fx need to go in getRecomendations()
+      //getPexelsApi(159613); // for testing only. this fx need to go in getRecomendations()
       getSpotifiyApi();
       renderNextQuestion();
       // hide the 1st page $('#startPage').style.display = "none"
       // hide the 2st page $('#secondPage').style.display = "none"
       // hide the 3st page $('#resultsPage').style.display = "none"
 }
-function getPexelsApi(id) { // done.
-      var urlById = `https://api.pexels.com/v1/photos/${id}`; // need to find the id of the picture first.
+function getPexelsApi(id) { // done. 
+     var urlById = `https://api.pexels.com/v1/photos/${id}`; // need to find the id of the picture first.
+     // var urlById =  'https://api.pexels.com/v1/search?query=country&per_page=5'// test link
+      
       /* selected pictures info: 
             punkRock: 
                   query: 'punk'
@@ -109,14 +111,16 @@ function getPexelsApi(id) { // done.
                   query: 'rock music'
                   id:1763075 
                   url: https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&h=350
-            hip-hopp:
-                  query: boom box
-                  id: 159613
-                  url: https://images.pexels.com/photos/159613/ghettoblaster-radio-recorder-boombox-old-school-159613.jpeg
             rap: 
                   query: rap music
                   id: 2091383
                   url: https://images.pexels.com/photos/2091383/pexels-photo-2091383.jpeg
+
+             country:  
+                  query: country music
+                  id: 34071
+                  url: https://images.pexels.com/photos/34071/pexels-photo.jpg
+           
             edm: 
                   query: edm music
                   id: 11401290
@@ -299,8 +303,8 @@ function getGreatestTally(tallies) { // needs testing.
                   winningGenre = genre;
             }
       });
-      getPexelsApi()//
-      return winningGenre;
+      getPexelsApi(winningGenre)
+      //return winningGenre;
 }
 function updateTallies(questionArr) {
       /* pass in the button choice
