@@ -1,0 +1,27 @@
+.text-center {
+    text-align: center;
+
+}
+
+.header {
+    background-color: black;
+}
+
+.h1 {
+    background-color: black;
+    color: antiquewhite;
+    margin: 200px;
+}
+
+.button {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: larger;
+    background-color: antiquewhite;
+    color: black;
+    margin: 100px;
+
+}
+
+
+
+
