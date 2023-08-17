@@ -33,10 +33,10 @@
   <body>
     <section id="startPage">
       <div class="startContainer">
-        <div>
-          <h1>Get a music genre recomendatin by answering some questions</h1>
+        <div class="title">
+          <h1>Get a music genre recommendation by answering some questions</h1>
         </div>
-        <div>
+        <div class="startBtnContainer">
           <button id="startBtn">Start</button>
         </div>
         <div id="songContainer"></div>
@@ -61,17 +61,18 @@
     </section>
     <!--  -->
     <section id="resultsPage">
+      <h1 id="winningResponse"></h1>
       <div id="container3">
         <aside id="pexelsContainer">
           <!-- Pexels api call goes here. -->
         </aside>
-        <main>
+        <section>
           <div>
-            <h2>Recomendations</h2>
-            <h3>You area Punk-rock listener, your adventurous...</h3>
+            <h2 id="genreTitle"></h2>
+            <h3 id="genreDescription"></h3>
           </div>
           <div id="cardContainer"></div>
-        </main>
+        </section>
       </div>
     </section>
     <!--  -->
