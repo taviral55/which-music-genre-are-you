@@ -8,17 +8,12 @@ var pexelsApiKey = 'v02S0I9htMCYgc11EVr0Yf9D4VnE1EDvcONyoroDFmlLYS8kEi5IdfbT';
 
 // Genre tallies: This might need to go inside of 'localStorage'.
 var genreTallies = [
-      ["punk-rock",],
+      ["punk-rock", 0],
       ["rock", 0],
       ["rap", 0],
       ["country", 0],
       ["jazz", 0]
 ]
-/* var punkRockCount = 0;
-var rockCount = 0;
-var hipHopCount = 0;
-var rapCount = 0
-var edmCount = 0;*/
 
 var questionIndex = 0; // the initial indes of the questions array.
 
@@ -76,30 +71,16 @@ var questionArray = [
       },
 ];
 
-/* Event Handlers:
-      1. on start button 'click'
-            -in this handler, you have to call the 'location() function 
-             to swith you to the questions.html
-
-      2. on question choice 'click'
-      
-            -this handler will 
-      3. on display results 'click'.
-*/
+//Event Handlers:
 $('#startBtn').on("click", startGame); //jquery not DOM
-$("#questionsPage").on("click", renderNextQuestion); //
+// $("#questionsPage").on("click", renderNextQuestion); // Renders next question successfully.
+// $("#btnContainer").on("click", renderNextQuestion); // Renders next question successfully.
+$("#btnContainer").on("click", btnClickedChoice);
 
-
-
-
-// Index Page Functions:
 function startGame() { // done
       //getPexelsApi(159613); // for testing only. this fx need to go in getRecomendations()
       getSpotifiyApi();
       renderNextQuestion();
-      // hide the 1st page $('#startPage').style.display = "none"
-      // hide the 2st page $('#secondPage').style.display = "none"
-      // hide the 3st page $('#resultsPage').style.display = "none"
 }
 function getPexelsApi(id) { // done. 
       var urlById = `https://api.pexels.com/v1/photos/${id}`; // need to find the id of the picture first.
@@ -230,64 +211,95 @@ function getSpotifiyApi() {    // done
 }
 
 // Questions Page Functions:
-// use display of none property for sections instead of different pages.
-function renderNextQuestion() {    // Mac and Sal
-      $("#question2").html("");    // clears the html at the id.
-      $("#btn1").html("");    // clears the html at the id.
-      $("#btn2").html("");    // clears the html at the id.
-      $("#btn3").html("");    // clears the html at the id.
-      $("#btn4").html("");    // clears the html at the id.
-      $("#btn5").html("");    // clears the html at the id.
+function renderNextQuestion() { // done
 
-      $("#startPage").hide();      // hides first page.
-      $("#resultsPage").hide();      // hides third page.
-      $("#questionsPage").show();  // diplays second page.
+      $("#question").html("");    // clears the html at the id.
+      $("#btn1").html("");
+      $("#btn2").html("");
+      $("#btn3").html("");
+      $("#btn4").html("");
+      $("#btn5").html("");
 
-      if (questionArray.length === questionIndex + 1) {
+      $("#startPage").hide();
+      $("#resultsPage").hide();
+      $("#questionsPage").show();
+
+      // console.log('questionArray.length:', questionArray.length)
+      // console.log('questionIndex + 1:', questionIndex)
+      if (questionIndex === questionArray.length) { // checks for last question click
             $("#startPage").hide();
             $("#questionsPage").hide();
             $("#resultsPage").show();
             getRecomendedGenre();
+            return;
       }
 
-      var currentQuestion = questionArray[questionIndex] // returns the cuestion text inside the questions array.
+      var currentQuestion = questionArray[questionIndex] // returns the question text inside the questions array.
 
-      $("#question2").append(currentQuestion.question);// appends question to question container.
+      $("#question").append(currentQuestion.question);// appends question to question container.
 
-      for (var i = 1; i <= 5; i++) { // renders all the choices to the html.
-            var choiceBtnEl = $("#btn" + i);     // bc btns start at 1.
-            var btnInnerText = currentQuestion.choices[Object.keys(currentQuestion.choices)[i - 1]];  // gets values of choices.
+      for (var i = 0; i < 5; i++) { // renders all the choices to the html.
+            var choiceBtnEl = $("#btn" + (i + 1));     // bc btns start at 1.
+            var btnInnerText = currentQuestion.choices[Object.keys(currentQuestion.choices)[i]];  // gets values of choices.
             choiceBtnEl.append(btnInnerText);
       };
 
       questionIndex++;
+      console.log('genreTallies:', genreTallies)
 }
-function multipleChoiceBtn(event) {
-      var userChoice = event.target.innerText; // grabs the innertext from button
 
-      //console.log(userChoice);
-      console.log(event)
+function btnClickedChoice(event) {
+      var userChoice = event.target.innerText.trim();
+      // console.log('userChoice:', userChoice)
 
-      if (event.target.nodeName === "BUTTON") {
-            //catpture the key of choices object  
-            //Object.keys(questionArray.);
-            //   questionIndex++;
+      var currentQuestionObj = questionArray[questionIndex - 1];
+      // console.log("currentQuestionObj:", currentQuestionObj);
 
-            if (questionIndex >= questionArray.length) { // when this is true, no more question and renders last page.
-                  // ex, when 4 >= 4
-                  $("#startPage").hide(); // start page is already hidden.
-                  $("#questionsPage").hide();  // diplays second page.
-                  $("#resultsPage").show();      // hides third page.     
+      // Gets the choice key a, b, c, d, e, and the values are what we compare. 
+      var choiceKey = findChoiceKey(currentQuestionObj.choices, userChoice);//NOT GETTING THE A KEY IN FIRST QUESTION.
+      console.log('FindChoiceKey function returns:', choiceKey);
+
+      updateTallies(choiceKey);
+
+      renderNextQuestion();
+}
+function findChoiceKey(choicesObj, userBtnSelection) { // fx compares userBtnSelection and object choice.
+
+      for (var key in choicesObj) {// loops through every key value pair in the choicesObj object.
+            if (choicesObj[key] === userBtnSelection) { // ex, 
+                  console.log('key:', key)
+                  return key;
             }
       }
+      return null; // Choice key not found
 }
+
+// might not need this fx!
+// function multipleChoiceBtn(event) {
+//       var userChoice = event.target.innerText; // grabs the innertext from button
+
+//       console.log(event)
+
+//       if (event.target.nodeName === "BUTTON") {
+//             //catpture the key of choices object  
+//             //Object.keys(questionArray.);
+//             //   questionIndex++;
+
+//             if (questionIndex >= questionArray.length) { // when this is true, no more question and renders last page.
+//                   // ex, when 4 >= 4
+//                   $("#startPage").hide(); // start page is already hidden.
+//                   $("#questionsPage").hide();  // diplays second page.
+//                   $("#resultsPage").show();      // hides third page.     
+//             }
+//       }
+// }
 
 // Third Page Functions: 
 function getRecomendedGenre() {
       console.log("getRecomendedGenre is WORKING!")
-      var tallyWinner = getGreatestTally(punkRockCount, rockCount, rapCount, hipHopCount, edmCount); // returns genre string.
-      // maybe and nested if to find the id
-      var pexelsImage = getPexelsApi(tallyWinner)
+      // var tallyWinner = getGreatestTally(); // returns genre string.
+      // // maybe and nested if to find the id
+      // var pexelsImage = getPexelsApi(tallyWinner)
 
       /*
             - use the 'select pictures info:' in the getPexelsApi() function to find 
@@ -307,7 +319,7 @@ function getRecomendedGenre() {
                   { genre: "edm", description: "Your are a Edmer!" },
             ]
       */
-      
+
 
 }
 function getGreatestTally(tallies) { // needs testing.
@@ -321,24 +333,28 @@ function getGreatestTally(tallies) { // needs testing.
             }
       });
       getPexelsApi(winningGenre)
-      //return winningGenre;
+      return winningGenre;
 }
-function updateTallies(questionArr) {
-      /* pass in the button choice
-          choices: { 
-            a: "Ozzy Oz Borne", //rock
-            b: "Joey Ramone", // punk
-            c: "Eminem", // Rap
-            d: "Kenny Chesney", //Country
-            e: "TIESTO", // edm
-          }
-      */
-      // then increase that tally.
-
-      questionArr.forEach((question, index) => {
-            console.log(`Question ${index + 1} choices:`, Object.keys(question.choices));
-      });
-      return;
+function updateTallies(choiceKey) { // done
+      switch (choiceKey) {
+            case "a":
+                  genreTallies[0][1]++; // punk-rock
+                  break;
+            case "b":
+                  genreTallies[1][1]++; // rock
+                  break;
+            case "c":
+                  genreTallies[2][1]++; // rap
+                  break;
+            case "d":
+                  genreTallies[3][1]++; // country
+                  break;
+            case "e":
+                  genreTallies[4][1]++; // edm
+                  break;
+            default:
+                  break; // if no case match.
+      }
 }
 
 // console.log("updateTallies: ", updateTallies(questionArray));
@@ -352,9 +368,9 @@ TODO:
 - need to get the choice values from the button click and save them to the tallies.
 
 
-BUGS: list any bug here so that we are all aware of the issues.
+BUGS:.
 
-- 
+- when calling the findChoiceKey() it does not return the first or the last question choice. 
 
 -
 
