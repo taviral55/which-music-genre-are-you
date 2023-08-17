@@ -23,8 +23,8 @@
       background-color: black;
 }
 #questionsPage {
-      display: block;
+      display: none;
 }
 #resultsPage {
-      display: block;
+      display: none;
 }
