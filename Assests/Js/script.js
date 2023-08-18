@@ -26,48 +26,48 @@ var questionArray = [
       b: "Welcome to the Jungle by Guns n' Roses",//rock
       c: "Dreams and Nightmares by Meek Mill",//Rap
       d: "Turn The Page by Bob Seger",//Country
-      e: "Levels by Avicii",// edm
+      e: "Levels by Avicii",//edm
     },
   },
   {
     question: "Which of these is most important in a concert?",
     choices: {
       a: "Moshing",//Punk
-      b: "The Production", //rock
-      c: "Bass", // rap
-      d: "The Acoustics", // Country
-      e: "PLUR", //Edm
+      b: "The Production",//rock
+      c: "Bass",//rap
+      d: "The Acoustics",//Country
+      e: "PLUR",//Edm
     },
   },
   {
     question:
       "If you got to hang out with your favorite musician/band, what would you do?",
     choices: {
-      a: "Go Skate", //punk
-      b: "Tear up a hotel room", // rock
-      c: "Kick it ", // rap
-      d: "Go off-roading", //Country
-      e: "Dance", // edm
+      a: "Go Skate",//punk
+      b: "Tear up a hotel room",//rock
+      c: "Kick it ",//rap
+      d: "Go off-roading",//Country
+      e: "Dance",//edm
     },
   },
   {
     question: "What outfit would you choose to go out",
     choices: {
-      a: "Worn out vintage clothes", // punk
-      b: "All leather outfit", // rock
-      c: "Gucci Outfit", //rap
-      d: "Flannel, jeans, and boots", // county
-      e: "Power Ranger Costume", //edm
+      a: "Worn out vintage clothes",//punk
+      b: "All leather outfit",//rock
+      c: "Gucci Outfit",//rap
+      d: "Flannel, jeans, and boots",//county
+      e: "Power Ranger Costume",//edm
     },
   },
   {
     question: "Pick an artist",
     choices: {
-      a: "Joey Ramone", //punk
-      b: "Ozzy Osbourne", //rock
-      c: "Ice Cube", // Rap
-      d: "Kenny Chesney", //Country
-      e: "Calvin Harris", // edm
+      a: "Joey Ramone",//punk
+      b: "Ozzy Osbourne",//rock
+      c: "Ice Cube",//Rap
+      d: "Kenny Chesney",//Country
+      e: "Calvin Harris",//edm
     },
   },
 ];
