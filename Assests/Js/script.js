@@ -12,7 +12,7 @@ var genreTallies = [
   ["rock", 0],
   ["rap", 0],
   ["country", 0],
-  ["jazz", 0],
+  ["edm", 0],
 ];
 
 var questionIndex = 0; // the initial indes of the questions array.
@@ -20,54 +20,54 @@ var questionIndex = 0; // the initial indes of the questions array.
 var questionArray = [
   {
     question:
-      "Pov: You're competing in a ski race down a spooky scarry mountain and need to montage all your training, which song do you pick?",
+      "You're competing in a ski race and need to montage all of your training, which song do you pick?",
     choices: {
-      a: "Welcome to  the jungle by  Guns n' Roses", //rock
-      b: "My own worst enemy by LIT", // punk
-      c: "The Motto by Drake.", // Rap
-      d: "Hard Workin' Man by Brooks & Dunn", //Country
-      e: "Scary Monsters and Nice Spirits by Skrillex", // edm
+      a: "California Uber Alles by Dead Kennedys",//punk
+      b: "Welcome to the Jungle by Guns n' Roses",//rock
+      c: "Dreams and Nightmares by Meek Mill",//Rap
+      d: "Turn The Page by Bob Seger",//Country
+      e: "Levels by Avicii",//edm
     },
   },
   {
-    question: "Which of these is most important in a concert.?",
+    question: "Which of these is most important in a concert?",
     choices: {
-      a: "Dancing/Moshing", //Punk
-      b: "Concert Atmosphere", //Rap
-      c: "The Production", // rock
-      d: "The Acoustics", // Country
-      e: "The Acoustics", //Edm
+      a: "Moshing",//Punk
+      b: "The Production",//rock
+      c: "Bass",//rap
+      d: "The Acoustics",//Country
+      e: "PLUR",//Edm
     },
   },
   {
     question:
-      "If  you got to hang out with your favorite musician, what would you do?",
+      "If you got to hang out with your favorite musician/band, what would you do?",
     choices: {
-      a: "Play Instruments Together", //punk
-      b: "Party together", // rock
-      c: "Share A J together", // rap
-      d: "Enjoy a meal and a nice conversation", //Country
-      e: "Dance-Off", // edm
+      a: "Go Skate",//punk
+      b: "Tear up a hotel room",//rock
+      c: "Kick it ",//rap
+      d: "Go off-roading",//Country
+      e: "Dance",//edm
     },
   },
   {
-    question: "Do you like Drake?",
+    question: "What outfit would you choose to go out",
     choices: {
-      a: "Yes", // EDM
-      b: "No", // Rap
-      c: "Absolutly Not", // rock
-      d: "Absolutly Not", // punk
-      e: "Who is that????", // county
+      a: "Worn out vintage clothes",//punk
+      b: "All leather outfit",//rock
+      c: "Gucci Outfit",//rap
+      d: "Flannel, jeans, and boots",//county
+      e: "Power Ranger Costume",//edm
     },
   },
   {
     question: "Pick an artist",
     choices: {
-      a: "Ozzy Oz Borne", //rock
-      b: "Joey Ramone", // punk
-      c: "Eminem", // Rap
-      d: "Kenny Chesney", //Country
-      e: "TIESTO", // edm
+      a: "Joey Ramone",//punk
+      b: "Ozzy Osbourne",//rock
+      c: "Ice Cube",//Rap
+      d: "Kenny Chesney",//Country
+      e: "Calvin Harris",//edm
     },
   },
 ];
@@ -194,7 +194,7 @@ function getSpotifiyApi(q) {
       var songPreview = shortened.preview_url;
 
       var appIconImg = $(
-        `<img src=${imageIcon} alt="Album cover image" width="75" height="75" />`
+        `<img src=${imageIcon} alt="Album cover image" id="spotifyImg" height="75px" width="75px"/>`
       );
       card.append(appIconImg);
 
@@ -315,11 +315,11 @@ function getRecommendedGenre() {
   // done
   console.log("m IS WORKING!");
   var responseArray = [
-    { genre: "punk-rock", description: "Your are Punk-Rock!" },
-    { genre: "rock", description: "Your are a Rocker!" },
-    { genre: "rap", description: "Your are a Rapper!" },
-    { genre: "country", description: "Your are Country!" },
-    { genre: "edm", description: "Your are a Edmer!" },
+    { genre: "punk-rock", description: "You are a Punk!" },
+    { genre: "rock", description: "Rock N' Roll Baby!" },
+    { genre: "rap", description: "You Got Swag!" },
+    { genre: "country", description: "Howdy Partner!" },
+    { genre: "edm", description: "You are a Raver!" },
   ];
 
   var testTally = genreTallies;
@@ -334,7 +334,7 @@ function getRecommendedGenre() {
   var genreTitle = "";
   var genreDescription = "";
   for (var i = 1; i <= responseArray.length; i++) {
-    console.log("Description winner: ", responseArray[i].genre);
+    //console.log("Description winner: ", responseArray[i].genre);
     console.log("tallyWinner: ", tallyWinner);
     if (responseArray[i].genre === tallyWinner) {
       genreTitle = responseArray[i].genre;
@@ -343,9 +343,9 @@ function getRecommendedGenre() {
     }
   }
 
-  $("#winningResponse").append("YOUR MISIC GENRE IS: " + genreTitle);
+  $("#genreDescription").append(genreDescription);
+  //$("#winningResponse").append("Your Music Genre Is: " + genreTitle);
   $("#genreTitle").append("Genre: " + genreTitle);
-  $("#genreDescription").append("Genre Description: " + genreDescription);
 }
 function getGreatestTally(tallies) {
   // done
