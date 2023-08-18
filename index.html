@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="wholePage">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document Location</title>
+    <title>Which Music Genre Are You?</title>
     <!-- fontawesome -->
     <link
       rel="stylesheet"
@@ -29,15 +29,26 @@
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" type="text/css" href="./Assests/Css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   </head>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
   <body>
     <section id="startPage">
       <div class="startContainer">
         <div class="title">
-          <h1>Get a music genre recommendation by answering some questions</h1>
+          <h1 class="border">Which Music Genre Are You?</h1>
         </div>
-        <div class="startBtnContainer">
-          <button id="startBtn">Start</button>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="startBtnContainer" class="hover">
+          <button id="startBtn" class="button is-white" class="button is-large" class="hover">Start</button>
         </div>
         <div id="songContainer"></div>
       </div>
@@ -45,11 +56,11 @@
     <!--  -->
     <section id="questionsPage">
       <div class="container">
-        <h2 id="question">
+        <h2 id="question" class="border2">
           <!-- will get filled with from a fucntion -->
           Questions:
         </h2>
-        <div id="btnContainer">
+        <div id="btnContainer" class="border">
           <!-- buttons will get filled with a function -->
           <button id="btn1" type="button"></button>
           <button id="btn2" type="button"></button>
@@ -69,7 +80,7 @@
         <section>
           <div>
             <h2 id="genreTitle"></h2>
-            <h3 id="genreDescription"></h3>
+            <h2 id="genreDescription"></h2>
           </div>
           <div id="cardContainer"></div>
         </section>
